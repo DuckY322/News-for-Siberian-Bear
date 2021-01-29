@@ -1,8 +1,8 @@
 {
   "expo": {
-    "name": "TestingApp",
-    "slug": "TestingApp",
-    "version": "1.0.0",
+    "name": "News Siberian Bear",
+    "slug": "News Siberian Bear",
+    "version": "0.0.1",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "splash": {
