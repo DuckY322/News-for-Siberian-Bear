@@ -23,26 +23,26 @@ export default function App() {
     fetchNews()
   }, [fetchNews])
 
-  const onSubmit = (id) => {
-    if (select === id) {
-      setselect(null);
+  const onSubmit = (index) => {
+    if (select === index) {
+      setselect(null)
     } else {
-      setselect(id);
+      setselect(index)
     }
   }
 
   return (
     <View style={styles.Screen}>
       <View style={styles.Header}>
-        <StatusBar backgroundColor="transparent"
+        <StatusBar
+          backgroundColor="transparent"
           barStyle="dark-content"
           translucent={true} />
         <View style={styles.NavBar}>
           <Svg style={styles.NavBar__Icon}
             width="20"
             height="20"
-            viewBox="0 0 24 24"
-          >
+            viewBox="0 0 24 24">
             <Path
               d="m4 6.75c0-2.619 2.131-4.75 4.75-4.75h9.133c-.329-1.151-1.378-2-2.633-2h-11.5c-1.517 0-2.75 1.233-2.75 2.75v15.5c0 1.517 1.233 2.75 2.75 2.75h.25z"
               fill="black"
@@ -61,14 +61,19 @@ export default function App() {
         refreshing={isLoading}
         keyExtractor={(item) => item.id.toString()}
         data={news}
-        renderItem={({ item }) => (
+        renderItem={({ item, index }) => (
           <View style={styles.NewsItem}>
             <View>
-              <Text style={styles.NewsItem__Title}>{item.title}</Text>
+              <Text style={styles.NewsItem__Title}>{
+                item.title
+                  .split('<br>').join('')
+                  .split('<br />').join('')
+                  .split('</br>').join('')}
+              </Text>
               <Text
-                id={item.id}
-                style={select === item.id ? {
-                  maxHeight: 10000,
+                numberOfLines={select === index ? 0 : 3}
+                style={select === index ? {
+                  maxWidth: 302,
                   fontFamily: Montserrat,
                   fontStyle: 'normal',
                   fontWeight: 'normal',
@@ -78,6 +83,7 @@ export default function App() {
                   marginBottom: 18,
                 } : {
                     maxHeight: 66,
+                    maxWidth: 302,
                     fontFamily: Montserrat,
                     fontStyle: 'normal',
                     fontWeight: 'normal',
@@ -85,13 +91,27 @@ export default function App() {
                     lineHeight: 22,
                     color: '#191C1F',
                     marginBottom: 18,
-                  }}>{item.body}</Text>
+                  }}>{
+                  item.body
+                    .split('<br>').join('')
+                    .split('<br />').join('')
+                    .split('</br>').join('')
+                    .split('<strong>').join('')
+                    .split('</strong>').join('')
+                    .split('(https://clck.ru/Qq4mu)').join('')
+                    .split('(https://clck.ru/Qq4mu )').join('')
+                    .split('<a href="').join('')
+                    .split('">ТВ пакеты').join('')
+                    .split('</a>').join('')
+                    .split('<img src="/files/pictures/images/sell_pp.jpg" />').join('')
+                    .split('https://vk.com/album-57120060_276669476').join('')
+                }</Text>
             </View>
             <View style={styles.NewsItem__div__Date}>
               <Text style={styles.NewsItem__Date}>{item.date}</Text>
-              <TouchableOpacity style={styles.NewsItem__More__Touch} onPress={() => onSubmit(item.id)}>
+              <TouchableOpacity style={styles.NewsItem__More__Touch} onPress={() => onSubmit(index)}>
                 {
-                  select != item.id ? (
+                  select != index ? (
                     <Text style={styles.NewsItem__More}>Подробнее</Text>
                   ) : (
                       <Text style={styles.NewsItem__More}>Скрыть</Text>
@@ -101,15 +121,15 @@ export default function App() {
                   width="25"
                   height="12"
                   viewBox="0 0 451.847 451.847"
-                  style={select === item.id ? {
+                  style={select === index ? {
                     transform: [{ rotate: '180deg' }]
                   } : {
                       transform: [{ rotate: '0deg' }]
                     }}
                 >
                   <Path d="M225.923,354.706c-8.098,0-16.195-3.092-22.369-9.263L9.27,151.157c-12.359-12.359-12.359-32.397,0-44.751
-		c12.354-12.354,32.388-12.354,44.748,0l171.905,171.915l171.906-171.909c12.359-12.354,32.391-12.354,44.744,0
-		c12.365,12.354,12.365,32.392,0,44.751L248.292,345.449C242.115,351.621,234.018,354.706,225.923,354.706z"
+		                      c12.354-12.354,32.388-12.354,44.748,0l171.905,171.915l171.906-171.909c12.359-12.354,32.391-12.354,44.744,0
+		                      c12.365,12.354,12.365,32.392,0,44.751L248.292,345.449C242.115,351.621,234.018,354.706,225.923,354.706z"
                     fill="#FF7700" />
                 </Svg>
               </TouchableOpacity>
